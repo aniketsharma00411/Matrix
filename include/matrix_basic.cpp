@@ -7,239 +7,229 @@ template <typename T>
 template <typename U>
 Matrix<T>::Matrix(const Matrix<U> &mat) {
     std::vector<T> row;
-    if constexpr (std::is_same<T, bool>::value) {
-        // std::vector<bool> row;
+    if con);
+}
+else row.push_back(mat.data_mat[i][j]);
+}
+data_mat.push_back(row);
+row.clear();
+}
+}
+else if constexpr (std::is_same<T, char>::value) {
+    // std::vector<char> row;
 
-        for (int i = 0; i < mat.row_length(); i++) {
-            for (int j = 0; j < mat.col_length(); j++) {
-                if constexpr (std::is_same<U, std::string>::value) {
-                    bool val;
-                    if (mat.data_mat[i][j] == "False" || mat.data_mat[i][j] == "false" ||
-                        mat.data_mat[i][j] == "0")
-                        val = false;
-                    else
-                        val = true;
-
-                    row.push_back(val);
-                } else
-                    row.push_back(mat.data_mat[i][j]);
+    for (int i = 0; i < mat.row_length(); i++) {
+        for (int j = 0; j < mat.col_length(); j++) {
+            std::string val;
+            if constexpr (std::is_same<U, std::string>::value) {
+                val = mat.data_mat[i][j];
+            } else {
+                val = std::to_string(mat.data_mat[i][j]);
             }
-            data_mat.push_back(row);
-            row.clear();
+            if (val.size() != 1)
+                assert(("Cannot convert to Matrix<char> object.", false));
+            row.push_back(val[0]);
         }
-    } else if constexpr (std::is_same<T, char>::value) {
-        // std::vector<char> row;
-
-        for (int i = 0; i < mat.row_length(); i++) {
-            for (int j = 0; j < mat.col_length(); j++) {
-                std::string val;
-                if constexpr (std::is_same<U, std::string>::value) {
-                    val = mat.data_mat[i][j];
-                } else {
-                    val = std::to_string(mat.data_mat[i][j]);
-                }
-                if (val.size() != 1)
-                    assert(("Cannot convert to Matrix<char> object.", false));
-                row.push_back(val[0]);
-            }
-            data_mat.push_back(row);
-            row.clear();
-        }
-    } else if constexpr (std::is_same<T, std::string>::value) {
-        // std::vector<std::string> row;
-
-        for (int i = 0; i < mat.row_length(); i++) {
-            for (int j = 0; j < mat.col_length(); j++) {
-                if constexpr (std::is_same<U, char>::value) {
-                    std::string s(1, mat.data_mat[i][j]);
-                    row.push_back(s);
-                } else {
-                    row.push_back(std::to_string(mat.data_mat[i][j]));
-                }
-            }
-            data_mat.push_back(row);
-            row.clear();
-        }
-        // } else if constexpr (std::is_same<T, int>::value) {
-        //     std::vector<int> row;
-
-        //     for (int i = 0; i < mat.row_length(); i++) {
-        //         for (int j = 0; j < mat.col_length(); j++) {
-        //             if constexpr (std::is_same<U, std::string>::value) {
-        //                 row.push_back(std::stoi(mat.data_mat[i][j]));
-        //             } else if constexpr (std::is_same<U, char>::value) {
-        //                 row.push_back((int)(mat.data_mat[i][j] - '0'));
-        //             } else {
-        //                 row.push_back((int)mat.data_mat[i][j]);
-        //             }
-        //         }
-        //         data_mat.push_back(row);
-        //         row.clear();
-        //     }
-        // } else if constexpr (std::is_same<T, unsigned int>::value) {
-        //     std::vector<unsigned int> row;
-
-        //     for (int i = 0; i < mat.row_length(); i++) {
-        //         for (int j = 0; j < mat.col_length(); j++) {
-        //             if constexpr (std::is_same<U, std::string>::value) {
-        //                 row.push_back(std::stoul(mat.data_mat[i][j]));
-        //             } else if constexpr (std::is_same<U, char>::value) {
-        //                 row.push_back((unsigned int)(mat.data_mat[i][j] - '0'));
-        //             } else {
-        //                 row.push_back((unsigned int)mat.data_mat[i][j]);
-        //             }
-        //         }
-        //         data_mat.push_back(row);
-        //         row.clear();
-        //     }
-        // } else if constexpr (std::is_same<T, short int>::value) {
-        //     std::vector<short int> row;
-
-        //     for (int i = 0; i < mat.row_length(); i++) {
-        //         for (int j = 0; j < mat.col_length(); j++) {
-        //             if constexpr (std::is_same<U, std::string>::value) {
-        //                 row.push_back(std::stoi(mat.data_mat[i][j]));
-        //             } else if constexpr (std::is_same<U, char>::value) {
-        //                 row.push_back((short int)(mat.data_mat[i][j] - '0'));
-        //             } else {
-        //                 row.push_back((short int)mat.data_mat[i][j]);
-        //             }
-        //         }
-        //         data_mat.push_back(row);
-        //         row.clear();
-        //     }
-        // } else if constexpr (std::is_same<T, unsigned short int>::value) {
-        //     std::vector<unsigned short int> row;
-
-        //     for (int i = 0; i < mat.row_length(); i++) {
-        //         for (int j = 0; j < mat.col_length(); j++) {
-        //             if constexpr (std::is_same<U, std::string>::value) {
-        //                 row.push_back(std::stoul(mat.data_mat[i][j]));
-        //             } else if constexpr (std::is_same<U, char>::value) {
-        //                 row.push_back((unsigned short int)(mat.data_mat[i][j] - '0'));
-        //             } else {
-        //                 row.push_back((unsigned short int)mat.data_mat[i][j]);
-        //             }
-        //         }
-        //         data_mat.push_back(row);
-        //         row.clear();
-        //     }
-        // } else if constexpr (std::is_same<T, long int>::value) {
-        //     std::vector<long int> row;
-
-        //     for (int i = 0; i < mat.row_length(); i++) {
-        //         for (int j = 0; j < mat.col_length(); j++) {
-        //             if constexpr (std::is_same<U, std::string>::value) {
-        //                 row.push_back(std::stol(mat.data_mat[i][j]));
-        //             } else if constexpr (std::is_same<U, char>::value) {
-        //                 row.push_back((long int)(mat.data_mat[i][j] - '0'));
-        //             } else {
-        //                 row.push_back((long int)mat.data_mat[i][j]);
-        //             }
-        //         }
-        //         data_mat.push_back(row);
-        //         row.clear();
-        //     }
-        // } else if constexpr (std::is_same<T, unsigned long int>::value) {
-        //     std::vector<unsigned long int> row;
-
-        //     for (int i = 0; i < mat.row_length(); i++) {
-        //         for (int j = 0; j < mat.col_length(); j++) {
-        //             if constexpr (std::is_same<U, std::string>::value) {
-        //                 row.push_back(std::stoul(mat.data_mat[i][j]));
-        //             } else if constexpr (std::is_same<U, char>::value) {
-        //                 row.push_back((unsigned long int)(mat.data_mat[i][j] - '0'));
-        //             } else {
-        //                 row.push_back((unsigned long int)mat.data_mat[i][j]);
-        //             }
-        //         }
-        //         data_mat.push_back(row);
-        //         row.clear();
-        //     }
-        // } else if constexpr (std::is_same<T, long long int>::value) {
-        //     std::vector<long long int> row;
-
-        //     for (int i = 0; i < mat.row_length(); i++) {
-        //         for (int j = 0; j < mat.col_length(); j++) {
-        //             if constexpr (std::is_same<U, std::string>::value) {
-        //                 row.push_back(std::stoll(mat.data_mat[i][j]));
-        //             } else if constexpr (std::is_same<U, char>::value) {
-        //                 row.push_back((long long int)(mat.data_mat[i][j] - '0'));
-        //             } else {
-        //                 row.push_back((long long int)mat.data_mat[i][j]);
-        //             }
-        //         }
-        //         data_mat.push_back(row);
-        //         row.clear();
-        //     }
-        // } else if constexpr (std::is_same<T, unsigned long long int>::value) {
-        //     std::vector<unsigned long long int> row;
-
-        //     for (int i = 0; i < mat.row_length(); i++) {
-        //         for (int j = 0; j < mat.col_length(); j++) {
-        //             if constexpr (std::is_same<U, std::string>::value) {
-        //                 row.push_back(std::stoull(mat.data_mat[i][j]));
-        //             } else if constexpr (std::is_same<U, char>::value) {
-        //                 row.push_back((unsigned long long int)(mat.data_mat[i][j] - '0'));
-        //             } else {
-        //                 row.push_back((unsigned long long int)mat.data_mat[i][j]);
-        //             }
-        //         }
-        //         data_mat.push_back(row);
-        //         row.clear();
-        //     }
-        // } else if constexpr (std::is_same<T, float>::value) {
-        //     std::vector<float> row;
-
-        //     for (int i = 0; i < mat.row_length(); i++) {
-        //         for (int j = 0; j < mat.col_length(); j++) {
-        //             if constexpr (std::is_same<U, std::string>::value) {
-        //                 row.push_back(std::stof(mat.data_mat[i][j]));
-        //             } else if constexpr (std::is_same<U, char>::value) {
-        //                 row.push_back((float)(mat.data_mat[i][j] - '0'));
-        //             } else {
-        //                 row.push_back((float)mat.data_mat[i][j]);
-        //             }
-        //         }
-        //         data_mat.push_back(row);
-        //         row.clear();
-        //     }
-        // } else if constexpr (std::is_same<T, double>::value) {
-        //     std::vector<double> row;
-
-        //     for (int i = 0; i < mat.row_length(); i++) {
-        //         for (int j = 0; j < mat.col_length(); j++) {
-        //             if constexpr (std::is_same<U, std::string>::value) {
-        //                 row.push_back(std::stod(mat.data_mat[i][j]));
-        //             } else if constexpr (std::is_same<U, char>::value) {
-        //                 row.push_back((double)(mat.data_mat[i][j] - '0'));
-        //             } else {
-        //                 row.push_back((double)mat.data_mat[i][j]);
-        //             }
-        //         }
-        //         data_mat.push_back(row);
-        //         row.clear();
-        //     }
-        // } else if constexpr (std::is_same<T, long double>::value) {
-    } else {
-        // std::vector<long double> row;
-
-        for (int i = 0; i < mat.row_length(); i++) {
-            for (int j = 0; j < mat.col_length(); j++) {
-                if constexpr (std::is_same<U, std::string>::value) {
-                    row.push_back(std::stold(mat.data_mat[i][j]));
-                } else if constexpr (std::is_same<U, char>::value) {
-                    row.push_back((long double)(mat.data_mat[i][j] - '0'));
-                } else {
-                    row.push_back((long double)mat.data_mat[i][j]);
-                }
-            }
-            data_mat.push_back(row);
-            row.clear();
-        }
+        data_mat.push_back(row);
+        row.clear();
     }
-    // } else
-    //     assert(("Undefined data type", false));
+}
+else if constexpr (std::is_same<T, std::string>::value) {
+    // std::vector<std::string> row;
+
+    for (int i = 0; i < mat.row_length(); i++) {
+        for (int j = 0; j < mat.col_length(); j++) {
+            if constexpr (std::is_same<U, char>::value) {
+                std::string s(1, mat.data_mat[i][j]);
+                row.push_back(s);
+            } else {
+                row.push_back(std::to_string(mat.data_mat[i][j]));
+            }
+        }
+        data_mat.push_back(row);
+        row.clear();
+    }
+    // } else if constexpr (std::is_same<T, int>::value) {
+    //     std::vector<int> row;
+
+    //     for (int i = 0; i < mat.row_length(); i++) {
+    //         for (int j = 0; j < mat.col_length(); j++) {
+    //             if constexpr (std::is_same<U, std::string>::value) {
+    //                 row.push_back(std::stoi(mat.data_mat[i][j]));
+    //             } else if constexpr (std::is_same<U, char>::value) {
+    //                 row.push_back((int)(mat.data_mat[i][j] - '0'));
+    //             } else {
+    //                 row.push_back((int)mat.data_mat[i][j]);
+    //             }
+    //         }
+    //         data_mat.push_back(row);
+    //         row.clear();
+    //     }
+    // } else if constexpr (std::is_same<T, unsigned int>::value) {
+    //     std::vector<unsigned int> row;
+
+    //     for (int i = 0; i < mat.row_length(); i++) {
+    //         for (int j = 0; j < mat.col_length(); j++) {
+    //             if constexpr (std::is_same<U, std::string>::value) {
+    //                 row.push_back(std::stoul(mat.data_mat[i][j]));
+    //             } else if constexpr (std::is_same<U, char>::value) {
+    //                 row.push_back((unsigned int)(mat.data_mat[i][j] - '0'));
+    //             } else {
+    //                 row.push_back((unsigned int)mat.data_mat[i][j]);
+    //             }
+    //         }
+    //         data_mat.push_back(row);
+    //         row.clear();
+    //     }
+    // } else if constexpr (std::is_same<T, short int>::value) {
+    //     std::vector<short int> row;
+
+    //     for (int i = 0; i < mat.row_length(); i++) {
+    //         for (int j = 0; j < mat.col_length(); j++) {
+    //             if constexpr (std::is_same<U, std::string>::value) {
+    //                 row.push_back(std::stoi(mat.data_mat[i][j]));
+    //             } else if constexpr (std::is_same<U, char>::value) {
+    //                 row.push_back((short int)(mat.data_mat[i][j] - '0'));
+    //             } else {
+    //                 row.push_back((short int)mat.data_mat[i][j]);
+    //             }
+    //         }
+    //         data_mat.push_back(row);
+    //         row.clear();
+    //     }
+    // } else if constexpr (std::is_same<T, unsigned short int>::value) {
+    //     std::vector<unsigned short int> row;
+
+    //     for (int i = 0; i < mat.row_length(); i++) {
+    //         for (int j = 0; j < mat.col_length(); j++) {
+    //             if constexpr (std::is_same<U, std::string>::value) {
+    //                 row.push_back(std::stoul(mat.data_mat[i][j]));
+    //             } else if constexpr (std::is_same<U, char>::value) {
+    //                 row.push_back((unsigned short int)(mat.data_mat[i][j] - '0'));
+    //             } else {
+    //                 row.push_back((unsigned short int)mat.data_mat[i][j]);
+    //             }
+    //         }
+    //         data_mat.push_back(row);
+    //         row.clear();
+    //     }
+    // } else if constexpr (std::is_same<T, long int>::value) {
+    //     std::vector<long int> row;
+
+    //     for (int i = 0; i < mat.row_length(); i++) {
+    //         for (int j = 0; j < mat.col_length(); j++) {
+    //             if constexpr (std::is_same<U, std::string>::value) {
+    //                 row.push_back(std::stol(mat.data_mat[i][j]));
+    //             } else if constexpr (std::is_same<U, char>::value) {
+    //                 row.push_back((long int)(mat.data_mat[i][j] - '0'));
+    //             } else {
+    //                 row.push_back((long int)mat.data_mat[i][j]);
+    //             }
+    //         }
+    //         data_mat.push_back(row);
+    //         row.clear();
+    //     }
+    // } else if constexpr (std::is_same<T, unsigned long int>::value) {
+    //     std::vector<unsigned long int> row;
+
+    //     for (int i = 0; i < mat.row_length(); i++) {
+    //         for (int j = 0; j < mat.col_length(); j++) {
+    //             if constexpr (std::is_same<U, std::string>::value) {
+    //                 row.push_back(std::stoul(mat.data_mat[i][j]));
+    //             } else if constexpr (std::is_same<U, char>::value) {
+    //                 row.push_back((unsigned long int)(mat.data_mat[i][j] - '0'));
+    //             } else {
+    //                 row.push_back((unsigned long int)mat.data_mat[i][j]);
+    //             }
+    //         }
+    //         data_mat.push_back(row);
+    //         row.clear();
+    //     }
+    // } else if constexpr (std::is_same<T, long long int>::value) {
+    //     std::vector<long long int> row;
+
+    //     for (int i = 0; i < mat.row_length(); i++) {
+    //         for (int j = 0; j < mat.col_length(); j++) {
+    //             if constexpr (std::is_same<U, std::string>::value) {
+    //                 row.push_back(std::stoll(mat.data_mat[i][j]));
+    //             } else if constexpr (std::is_same<U, char>::value) {
+    //                 row.push_back((long long int)(mat.data_mat[i][j] - '0'));
+    //             } else {
+    //                 row.push_back((long long int)mat.data_mat[i][j]);
+    //             }
+    //         }
+    //         data_mat.push_back(row);
+    //         row.clear();
+    //     }
+    // } else if constexpr (std::is_same<T, unsigned long long int>::value) {
+    //     std::vector<unsigned long long int> row;
+
+    //     for (int i = 0; i < mat.row_length(); i++) {
+    //         for (int j = 0; j < mat.col_length(); j++) {
+    //             if constexpr (std::is_same<U, std::string>::value) {
+    //                 row.push_back(std::stoull(mat.data_mat[i][j]));
+    //             } else if constexpr (std::is_same<U, char>::value) {
+    //                 row.push_back((unsigned long long int)(mat.data_mat[i][j] - '0'));
+    //             } else {
+    //                 row.push_back((unsigned long long int)mat.data_mat[i][j]);
+    //             }
+    //         }
+    //         data_mat.push_back(row);
+    //         row.clear();
+    //     }
+    // } else if constexpr (std::is_same<T, float>::value) {
+    //     std::vector<float> row;
+
+    //     for (int i = 0; i < mat.row_length(); i++) {
+    //         for (int j = 0; j < mat.col_length(); j++) {
+    //             if constexpr (std::is_same<U, std::string>::value) {
+    //                 row.push_back(std::stof(mat.data_mat[i][j]));
+    //             } else if constexpr (std::is_same<U, char>::value) {
+    //                 row.push_back((float)(mat.data_mat[i][j] - '0'));
+    //             } else {
+    //                 row.push_back((float)mat.data_mat[i][j]);
+    //             }
+    //         }
+    //         data_mat.push_back(row);
+    //         row.clear();
+    //     }
+    // } else if constexpr (std::is_same<T, double>::value) {
+    //     std::vector<double> row;
+
+    //     for (int i = 0; i < mat.row_length(); i++) {
+    //         for (int j = 0; j < mat.col_length(); j++) {
+    //             if constexpr (std::is_same<U, std::string>::value) {
+    //                 row.push_back(std::stod(mat.data_mat[i][j]));
+    //             } else if constexpr (std::is_same<U, char>::value) {
+    //                 row.push_back((double)(mat.data_mat[i][j] - '0'));
+    //             } else {
+    //                 row.push_back((double)mat.data_mat[i][j]);
+    //             }
+    //         }
+    //         data_mat.push_back(row);
+    //         row.clear();
+    //     }
+    // } else if constexpr (std::is_same<T, long double>::value) {
+}
+else {
+    // std::vector<long double> row;
+
+    for (int i = 0; i < mat.row_length(); i++) {
+        for (int j = 0; j < mat.col_length(); j++) {
+            if constexpr (std::is_same<U, std::string>::value) {
+                row.push_back(std::stold(mat.data_mat[i][j]));
+            } else if constexpr (std::is_same<U, char>::value) {
+                row.push_back((long double)(mat.data_mat[i][j] - '0'));
+            } else {
+                row.push_back((long double)mat.data_mat[i][j]);
+            }
+        }
+        data_mat.push_back(row);
+        row.clear();
+    }
+}
+// } else
+//     assert(("Undefined data type", false));
 }
 
 /// Method to return the matrix in the form of vector
